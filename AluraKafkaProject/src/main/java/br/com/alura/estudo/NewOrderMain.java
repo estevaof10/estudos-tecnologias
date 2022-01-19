@@ -7,9 +7,10 @@ import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
 
 public class NewOrderMain {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
 
         var producer =  new KafkaProducer<String, String>(properties());
         var value ="123456,654654,8978979879" ;
@@ -21,7 +22,7 @@ public class NewOrderMain {
             }
             System.out.println("sucesso enviando "+ data.topic() + ":::: partition " + data.partition() + " / offset "
             + data.offset() + "time " + data.timestamp());
-        });
+        }).get();
     }
 
     private static Properties properties() {
